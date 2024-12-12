@@ -1,0 +1,43 @@
+
+@charset "UTF-8";
+
+.login-form {
+    border: 1px solid #de3c3c;
+    padding: 20px;
+    width: 400px;
+    height: 500px;
+    margin: 90px auto;
+    background-color: red;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color:white;
+    font-size:30px;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    width:150px;
+    font-size: 25px;
+    
+   
+}
+
+input[type="submit"]:hover {
+    background-color: #3e8e41;
+}

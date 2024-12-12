@@ -1,0 +1,169 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="ProjectLibrary.dao.StudentDao"%>
+<%@page import="ProjectLibrary.dto.BorrowData"%>
+<%@page import="ProjectLibrary.dao.BorrowBookDao"%>
+<%@page import="ProjectLibrary.dao.addbookDao"%>
+<%@page import="java.util.List"%>
+<%@page import="ProjectLibrary.dto.Book"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrowed Books</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin-top: 60px;
+        }
+
+        .navbar {
+            background-color: red;
+        }
+
+        .navbar a, .navbar .dropdown-item {
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar .btn-borrowed {
+            border-color: white;
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar .btn-borrowed:hover {
+            background-color: white;
+            color: red;
+        }
+
+        .dropdown-menu {
+            background-color: green;
+            border: none;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .table-container {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        th {
+            background-color: red;
+            color: white;
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<% 
+    HttpSession session2 = request.getSession();
+    String studentName = (String) session2.getAttribute("sname"); 
+    String email = (String) session2.getAttribute("semail");
+    
+    
+%>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+        <!-- Styled Borrowed Books Button -->
+        <a href="BorrowedBooks.jsp" class="btn btn-outline-light btn-borrowed me-3">My Borrowed Books</a>
+
+        <!-- Search Bar in Navbar -->
+        <form class="d-flex mx-auto" method="get" action="SearchBooks">
+            <input class="form-control me-2" type="search" name="search" placeholder="Search by Title, Author, or Genre" aria-label="Search">
+            <button class="btn btn-outline-light" type="submit">Search</button>
+        </form>
+
+        <!-- Profile Dropdown -->
+        <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                ☰
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="StudentProfile.jsp">Profile</a></li>
+                <li><a class="dropdown-item" href="UpdateStudent.jsp">Update</a></li>
+                <li><a class="dropdown-item" href="Logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <button class="btn btn-secondary" onclick="history.back()">Back</button>
+</div>
+
+<h1><%= studentName %></h1>
+ 
+ 
+
+<!-- Book List Table -->
+<div class="container table-container">
+    <h2 class="text-center">Library Books</h2>
+    <%
+        BorrowBookDao borrowbookDao = new BorrowBookDao();
+        addbookDao addbookdao = new addbookDao();
+        StudentDao studentDao = new StudentDao();
+        List<BorrowData> borrowdata = borrowbookDao.fetch(email); // Fetch all books from the database
+        
+     %>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                 
+                <th>Title</th>
+                <th>BORROW DATE</th>
+                <th>SUBMIT DATE</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% 
+            for (BorrowData borrow : borrowdata) { 
+        %>
+            <tr>
+                <td><%= borrow.getB().getBookName() %></td>
+                <!-- Check if borrowDate is null -->
+                <td><%= (borrow.getBorrowDate() != null) ? borrow.getBorrowDate() : "Not Available" %></td>
+
+                <!-- Check if submitDate is null -->
+                <td><%= (borrow.getSubmitDate() != null) ? borrow.getSubmitDate() : "Not Submitted" %></td>
+                 
+                <td>
+                    <form action="BorrowSubmitBook" >
+                         
+                        <input type="hidden" name="bookId" value="<%= borrow.getB().getBookId() %>">
+                        <input type="hidden" name="semail" value="<%= borrow.getS().getEmail() %>">
+                         
+                        <button type="submit" class="btn btn-success">SUBMIT</button>
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+ 
+
+label {
+    color: rgb(227, 229, 230);
+    font-size: 20px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="number"] {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.back-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #45a049;
+        }
+
+#submit
+{
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+}
+
+input[type="submit"]:hover {
+    background-color: #3e8e41;
+}
+.circular-element 
+{
+    width: 500px;
+    margin: 70px auto;
+    padding: 50px;
+    border: 5px solid #df4242;
+    border-radius: 10px;
+    
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);   
+  
+    border: 5px solid blue;
+    animation: color-change 2s infinite alternate;
+  }
+  
+  @keyframes color-change {
+    0% {
+      border-color: blue;
+    }
+    10% {
+      border-color: rgb(52, 199, 30);
+    }
+    20% {
+        border-color: rgb(221, 15, 15);
+      }
+      30% {
+        border-color: rgb(185, 76, 197);
+      }
+      40% {
+        border-color: rgb(251, 244, 49);
+      }
+      50% {
+        border-color: rgb(94, 220, 172);
+      }
+      60% {
+        border-color: rgb(221, 15, 15);
+      }
+      70% {
+        border-color: rgb(185, 76, 197);
+      }
+      80% {
+        border-color: rgb(251, 244, 49);
+      }
+      90% {
+        border-color: rgb(94, 220, 172);
+      }
+      
+      
+
+    100% {
+      border-color: rgb(124, 219, 64);
+    }
+  }
